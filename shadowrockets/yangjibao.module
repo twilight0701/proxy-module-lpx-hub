@@ -1,0 +1,17 @@
+#!name=养基宝去广告
+#!desc=拦截新抓包确认的养基宝开屏广告配置、广告上报与试玩广告资源
+#!author=twilight0701
+#!homepage=https://github.com/twilight0701/proxy-model-plugin-hub
+
+[Rule]
+DOMAIN,guanggao-prod.cn-shanghai.log.aliyuncs.com,REJECT
+
+[URL Rewrite]
+^https?:\/\/app-api\.yangjibao\.com\/content\/v1\/ad\/events(?:\?.*)?$ - reject
+^https?:\/\/lf-cdn-tos\.bytescm\.com\/obj\/static\/ad\/play-comp\/playable-component-sdk\/package\.ugen\.json(?:\?.*)?$ - reject
+
+[Script]
+yangjibao-ad = type=http-response, pattern=^https?:\/\/app-api\.yangjibao\.com\/content\/v1\/ad\/config(?:\?.*)?$, script-path=https://raw.githubusercontent.com/twilight0701/proxy-model-plugin-hub/main/js%E8%84%9A%E6%9C%AC/yangjibao.js, requires-body=true, timeout=10
+
+[MITM]
+hostname = app-api.yangjibao.com, lf-cdn-tos.bytescm.com
